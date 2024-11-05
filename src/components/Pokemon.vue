@@ -15,8 +15,8 @@ export default {
     },
     async mounted() {
         await this.listarPokemon()
-        
-    
+
+
     },
     computed: {
         totalActivos() {
@@ -30,9 +30,14 @@ export default {
     },
     methods: {
         async getPokemon() {
-            const url = 'https://pokeapi.co/api/v2/pokemon';
-            const { data } = await axios.get(url);
-            return data.results
+            try {
+                const url = 'https://pokeapi.co/api/v2/pokemon';
+                const { data } = await axios.get(url);
+                return data.results
+            } catch (error) {
+                console.log("No se pudo obtener los pokemones", error);
+            }
+
 
         },
         async getPicPokemon(pokeUrl) {
@@ -64,11 +69,11 @@ export default {
                 poke.activo = true;
             } else {
                 poke.activo = false;
-              this.$emit('nombreIncorrecto');
-              
+                this.$emit('nombreIncorrecto');
+
             }
             poke.nombrePoke = '';
-            
+
         }
     },
 }
@@ -86,20 +91,20 @@ export default {
         </div>
     </div>
     <div class="modal" tabindex="-1" id="myModal" ref="myModal">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Nombre incorrecto</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p>El nombre ingresado no coincide con el del Pokémon.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nombre incorrecto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>El nombre ingresado no coincide con el del Pokémon.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 </template>
 
@@ -121,7 +126,7 @@ export default {
 img {
     width: 100px;
     height: 120px;
-   
+
 }
 
 input {
