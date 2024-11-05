@@ -30,9 +30,13 @@ export default {
     },
     methods: {
         async getPokemon() {
-            const url = 'https://pokeapi.co/api/v2/pokemon';
-            const { data } = await axios.get(url);
-            return data.results
+            try{
+                const url = 'https://pokeapi.co/api/v2/pokemon';
+                const { data } = await axios.get(url);
+                return data.results
+            } catch (error){
+                console.log("No se pudo obtener los pokemones",error);
+            }
 
         },
         async getPicPokemon(pokeUrl) {
